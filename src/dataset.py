@@ -1,8 +1,6 @@
 import pandas as pd
 
 from pathlib import Path
-from zipline.data.bundles import register
-from zipline.data.bundles.csvdir import csvdir_equities
 
 
 def _register_bundle(df, csv_path_to_save, time_column_label=None):
@@ -45,4 +43,4 @@ def create_zipline_dataset(df, dividends=0.0, splits=1.0, path_to_save=Path("/us
         columns={"time": "date", "real_volume": "volume"})
     zipline_rates = zipline_rates.assign(dividend=dividends, split=splits)
     zipline_rates.groupby("symbol").apply(
-        _register_bundle, args=(path_to_save))
+        _register_bundle, path_to_save)
